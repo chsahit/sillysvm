@@ -4,22 +4,41 @@ def train(data, labels):
     #find support vectors
     #calculate hyperplane
 
+    class0 = []
+    class1 = []
+    mean0 = []
     mean1 = []
     support_vector0 = [] 
     support_vector1 = []
 
+    #calculate mean for each dimension while also populating class list
     for i in range(len(data)):
-        mean0_i = 0.0
-        count0 = 0.0
-        mean1_i = 0.0
-        count1 = 0.0
-        for j in range(len(data[i])):
         if labels[i] == 0:
-            mean0_i += data[i][j]
-            count0 += 1
+            class0.append(data[i])
         else:
-            mean1_i += data[i][j]
-            count1 +=1
-        mean0.append(mean0_i/count0)
-        mean1.append(mean1_i/count1)
+            class1.append(data[i])
+    mean0 = __calculate_mean(class0)
+    mean1 = __calculate_mean(class1)
+    support_vector0 = __find_supportvecs(class0, mean1)
+    support_vector1 = __find_supportvecs(class1, mean0)
 
+
+def __calculate_mean(classN):
+    mean = []
+    for i in range(len(classN)):
+        mean_i = 0.0
+        count = 0.0
+        for j in range(len(classN[i]])):
+                mean_i += classN[i][j]
+                count += 1
+        mean.append(mean_i/count)
+    return mean
+
+def __find_supportvecs(classN, mean):
+    curr_max_dist = 0
+    support_vector = []
+    for i in range(len(classN)):
+        distance = (sum([(x - y)**2 for x,y in zip(classN[i],mean)]))**0.5
+        if distance > curr_max_dist:
+            support_vector = classN[i]
+    return support_vector
