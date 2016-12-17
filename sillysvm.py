@@ -1,4 +1,4 @@
-hyperplane = []
+hyperplane = ()
 def train(data, labels):
     #find mean of each label
     #find support vectors
@@ -21,7 +21,10 @@ def train(data, labels):
     mean1 = __calculate_mean(class1)
     support_vector0 = __find_supportvecs(class0, mean1)
     support_vector1 = __find_supportvecs(class1, mean0)
-
+    midpoint = [((x+y)/2.0) for x,y in zip(support_vector0, support_vector1)]
+    slope = [(x - y) for x,y in zip(support_vector0, support_vector1)]
+    inverseslope = [-1/x for x in slope]
+    hyperplane = (inverseslope, midpoint)
 
 def __calculate_mean(classN):
     mean = []
