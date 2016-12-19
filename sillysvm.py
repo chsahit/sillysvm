@@ -1,9 +1,4 @@
-hyperplane = ()
 def train(data, labels):
-    #find mean of each label
-    #find support vectors
-    #calculate hyperplane
-
     class0 = []
     class1 = []
     mean0 = []
@@ -23,25 +18,35 @@ def train(data, labels):
     support_vector1 = __find_supportvecs(class1, mean0)
     midpoint = [((x+y)/2.0) for x,y in zip(support_vector0, support_vector1)]
     slope = [(x - y) for x,y in zip(support_vector0, support_vector1)]
-    inverseslope = [-1/x for x in slope]
-    hyperplane = (inverseslope, midpoint)
+    hyperplane = (slope, midpoint)
+    return hyperplane
+
+def predict(data_point):
+   pass 
 
 def __calculate_mean(classN):
     mean = []
     for i in range(len(classN)):
         mean_i = 0.0
         count = 0.0
-        for j in range(len(classN[i]])):
+        for j in range(len(classN[i])):
                 mean_i += classN[i][j]
-                count += 1
+                count += 1.0
         mean.append(mean_i/count)
     return mean
 
 def __find_supportvecs(classN, mean):
-    curr_max_dist = 0
+    curr_min_dist = 10000000000000000 #TODO THIS IS BAD
     support_vector = []
     for i in range(len(classN)):
-        distance = (sum([(x - y)**2 for x,y in zip(classN[i],mean)]))**0.5
-        if distance > curr_max_dist:
+        distance = (sum([(x - y)**2.0 for x,y in zip(classN[i],mean)]))**0.5
+        if distance < curr_min_dist:
+            curr_min_dist = distance
             support_vector = classN[i]
     return support_vector
+
+if __name__ == "__main__":
+    data = [[1, 1] , [1, 2], [2, 1], [2, 2], [-1, -1], [-1, -2], [-2, -1], [-2, -2]]
+    labels  = [1, 1, 1, 1, 0, 0, 0, 0]
+    hyperplane = train(data, labels)
+    print hyperplane
