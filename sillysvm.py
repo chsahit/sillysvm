@@ -16,13 +16,19 @@ def train(data, labels):
     mean1 = __calculate_mean(class1)
     support_vector0 = __find_supportvecs(class0, mean1)
     support_vector1 = __find_supportvecs(class1, mean0)
+
     midpoint = [((x+y)/2.0) for x,y in zip(support_vector0, support_vector1)]
     slope = [(x - y) for x,y in zip(support_vector0, support_vector1)]
     hyperplane = (slope, midpoint)
     return hyperplane
 
-def predict(data_point):
-   pass 
+def predict(data_point, hyperplane):
+    value = sum([(hyperplane[0][x] * (data_point[x] - hyperplane[1][x])) for x \
+            in range(len(data_point))])
+    if value > 0:
+        print value
+    else:
+        print value
 
 def __calculate_mean(classN):
     mean = []
@@ -46,7 +52,10 @@ def __find_supportvecs(classN, mean):
     return support_vector
 
 if __name__ == "__main__":
-    data = [[1, 1] , [1, 2], [2, 1], [2, 2], [-1, -1], [-1, -2], [-2, -1], [-2, -2]]
+    data = [[1, 1] , [1, 2], [2, 1], [2, 2], [-1, -1], [-1, -2], [-2, -1], 
+    [-2, -2]]
     labels  = [1, 1, 1, 1, 0, 0, 0, 0]
     hyperplane = train(data, labels)
     print hyperplane
+    predict([-3, -3], hyperplane)
+    predict([3, 3], hyperplane)
