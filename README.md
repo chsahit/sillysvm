@@ -3,13 +3,13 @@ A new implementation for a linear two-class Support Vector Machine
 
 ===
 
-**Background**
+**Background**  
 I was reading the theory of how SVMs work and I thought "oh, I know how I'd do 
 this!". Turns out how I thought it was done isn't how it is done. Before
 diving into the math of how SVMs are actually implemented I wanted to try it
 my way. And so SillySVM was born.
 
-**Implementation**
+**Implementation**  
 Support vector machines work by finding the hyperplane that separates classes of
 data with the largest margin between the plane and the data. The data points 
 closest to the separating hyperplane are referred to as support vectors. In my 
